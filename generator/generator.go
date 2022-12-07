@@ -20,13 +20,15 @@ func handlePanicError(err error) {
 // packName is the default package name
 // moduleName is the full name of the module e.g.
 // github.com/dropdevrahul/gocache
-func GenerateModule(packName string, moduleName string) {
-	if _, err := os.Stat(packName); errors.Is(err, os.ErrNotExist) {
-		err := os.Mkdir(packName, os.ModePerm)
+func GenerateModule(target_dir, packName string, moduleName string) {
+  p := filepath.Join(target_dir, packName)
+
+	if _, err := os.Stat(p); errors.Is(err, os.ErrNotExist) {
+		err := os.Mkdir(p, os.ModePerm)
 		handlePanicError(err)
 	}
 
-	os.Chdir(packName)
+	os.Chdir(p)
 
 	if _, err := os.Stat("src"); errors.Is(err, os.ErrNotExist) {
 		err := os.Mkdir("src", os.ModePerm)
